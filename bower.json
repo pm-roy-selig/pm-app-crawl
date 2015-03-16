@@ -1,0 +1,18 @@
+{
+  "name": "pm-app-crawl",
+  "version": "1.0.0",
+  "homepage": "https://github.com/pm-roy-selig/pm-app-crawl",
+  "authors": [
+    "pm-roy-selig <roy.selig@pubmatic.com>"
+  ],
+  "description": "manages front resource dependencies",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
