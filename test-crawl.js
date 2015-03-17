@@ -1,6 +1,9 @@
 var crawl = require( 'crawl' );
 var capture = require( 'capture' );
 
+//var Sitemap = require('simple-sitemap');
+//var sitemap = new Sitemap( "http://www.pubmatic.com", "./dist/pubmatic");
+
 
 /*
 var sm = require('sitemap');
@@ -35,7 +38,6 @@ crawl.crawl( "http://www.pubmatic.com", function ( err, pages ) {
         }
     );
 
-    console.log( urls );
     capture( urls,
         { out: "./sitemaps/pubmatic-web",
             format:"png" },
