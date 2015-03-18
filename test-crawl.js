@@ -38,8 +38,12 @@ crawl.crawl( "http://www.pubmatic.com", function ( err, pages ) {
         }
     );
 
+
+    console.log( urls );
+
     capture( urls,
         { out: "./sitemaps/pubmatic-web",
+            phantomBin:"/Applications/phantomjs/bin/phantomjs",
             format:"png" },
         function(){
             console.log("DONE");
