@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html>
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
@@ -7,41 +7,63 @@
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
 
 </head>
-<body>
+<body id="app-container" ng-app="app">
 
 <div class="container" ng-controller="main">
 
+    <div class="row">
+        <div class="col-sm-12">
 
-    <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-12 form-horizontal">
+                    <h1>PM Site Mapper</h1>
 
-        <div class="row">
-            <div class="col-sm-12 form-horizontal">
-                <h1>PM Sitemapper</h1>
-
-                <div class="form-inline">
-                    <input class="form-control" placeholder="Name" ng-model="params.name">
-
-                    <input class="form-control" placeholder="URL" ng-model="params.url">
+                    <div class="form-inline">
+                        <input class="form-control" placeholder="Name" ng-model="params.name" ng-disabled="disableUI">
+                        <input class="form-control" placeholder="URL" ng-model="params.url" ng-disabled="disableUI">
 
 
-                    <input class="form-control" placeholder="Username" ng-model="params.username">
+                        <input class="form-control" placeholder="Username" ng-model="params.username"
+                               ng-disabled="disableUI">
 
-                    <input class="form-control" placeholder="Password" ng-model="params.password">
+                        <input class="form-control" placeholder="Password" ng-model="params.password"
+                               ng-disabled="disableUI">
 
-                    <button class="btn btn-primary" ng-click="map()">Go</button>
+
+                        <button class="btn btn-primary" ng-click="map()" ng-disabled="disableUI">Go</button>
+                        <button class="btn btn-primary" ng-click="map()" ng-disabled="!disableUI">Cancel</button>
+
+                    </div>
                 </div>
             </div>
+
         </div>
-
     </div>
 
+    <hr>
 
-    <div class="sitemaps">
+    <div class="row">
+        <div class="well">
+            <h3>Log</h3>
 
-
-
+            <div ng-repeat="item in log">{{item}}</div>
+        </div>
     </div>
+
+    <div class="row">
+        <div class="well">
+            <h3>Site Catalog</h3>
+
+            <button class="btn btn-group-sm btn-default" ng-repeat="item in sites">
+                {{item.name}}
+                <span class="btn btn-sm btn-default" ng-click="removeSiteFromCatalog( item )">x</span>
+            </button>
+        </div>
+    </div>
+
 </div>
+
+
 
 
 <script src="../bower_components/angular/angular.min.js"></script>
@@ -49,16 +71,8 @@
 <script src="../bower_components/angular-strap/dist/angular-strap.min.js"></script>
 
 <script src="js/main.js"></script>
+<script src="js/web-socket-client.js"></script>
 
-<script>
-
-    var host = window.document.location.host.replace( /:.*/, '' );
-    var ws = new WebSocket( 'ws://' + host + ':8080' );
-    ws.onmessage = function ( event ) {
-        console.log( event.data );
-    };
-
-</script>
 
 </body>
 </html>
