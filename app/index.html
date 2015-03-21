@@ -30,14 +30,28 @@
                                ng-disabled="disableUI">
 
 
-                        <button class="btn btn-primary" ng-click="map()" ng-disabled="disableUI">Go</button>
-                        <button class="btn btn-primary" ng-click="map()" ng-disabled="!disableUI">Cancel</button>
+                        <button class="btn btn-primary" ng-click="map()" ng-show="!mappingInProgress">Go</button>
+                        <button class="btn btn-primary" ng-click="map()" ng-show="mappingInProgress">Cancel</button>
 
                     </div>
                 </div>
             </div>
 
         </div>
+    </div>
+
+
+
+    <div class="row" ng-show="mappingInProgress">
+
+        <div class="col-sm-12">
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                    <span class="sr-only">40% Complete (success)</span>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <hr>

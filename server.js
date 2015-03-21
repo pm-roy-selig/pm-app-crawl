@@ -1,4 +1,4 @@
-var siteDataFile = './app/data/sitemap-data.js',
+var siteDataFile = './app/data/sitemap-data.js'
 //    WebSocket = require( 'ws' )
 //    , WebSocketServer = WebSocket.Server
     , http = require( 'http' )
@@ -40,7 +40,7 @@ app.post( '/map-site', function ( req, res ) {
     crawler.callbacks.tick = function( args ){
         webSocketService.send( {
             type: "event",
-            event: "process-update",
+            event: "mapper-update",
             remaining: 0, //args.remaining,
             msg: "111" //args.msg
         } );
@@ -48,8 +48,20 @@ app.post( '/map-site', function ( req, res ) {
         console.log( args );
     };
 
-    crawler.callbacks.end = function(){
+    crawler.callbacks.end = function( pages ){
         console.log("crawl done");
+        webSocketService.send( {
+            type: "event",
+            event: "mapper-done",
+            remaining: 0, //args.remaining,
+            msg: "111" //args.msg
+        } );
+
+        webSocketService.send( {
+            type: "event",
+            event: "mapper-dump",
+            data:pages
+        } );
         addSiteToSitesData( site );
     };
 

@@ -6,7 +6,6 @@
 
 var crawler = (function () {
 
-
     /**
      * Crawler Module
      */
@@ -30,59 +29,38 @@ var crawler = (function () {
 
         log( site.url );
 
+        //addSiteToSitesData( site );
+
+        if ( callbacks.start )
+            callbacks.start.call( site );
+
+        captureUrl( site.name, [ site.url ] );
+
+    }
+
+    function crawlSite2( site, startCallback, progressCallback, endCallback ) {
+
+        log( site.url );
 
         //addSiteToSitesData( site );
 
         if ( callbacks.start )
             callbacks.start.call( site );
 
-        captureUrl( site.name, [site.url] );
+        crawl.crawl( site.url, function ( err, pages ) {
 
-        return;
 
-        /*
+            if ( err ) {
+                console.error( "An error occured", err );
+                return;
+            }
 
-         crawl.crawl( url, function ( err, pages ) {
+            console.log( pages );
 
-         console.log( pages );
-         if ( err ) {
-         console.error( "An error occured", err );
-         return;
-         }
+            callbacks.end.call( pages );
 
-         var urls = pages.map( function ( urlObj ) {
-         return urlObj.url;
-         } )
+        } );
 
-         .filter(
-         function ( url ) {
-         return url.indexOf( ".php" ) == url.length - 4;
-         }
-         );
-
-         console.log( urls );
-
-         captureUrl( "http://www.google.com" );
-
-         return;
-
-         captureUrl( urls );
-
-         capture( urls,
-         {
-         // out: "./sitemaps/pubmatic-web",
-         phantomBin: "/Applications/phantomjs/bin/phantomjs",
-         format: "png"
-         },
-         function () {
-         console.log( "DONE" );
-         }
-         );
-
-         //console.log(JSON.stringify(pages));
-         } );
-
-         */
     }
 
     /*Screenshot the page*/
@@ -104,7 +82,7 @@ var crawler = (function () {
         var url = _urls.shift();
 
         capture(
-            [url],
+            [ url ],
             {
                 out: "./sitemaps/" + siteName + "/",
                 phantomBin: "/Applications/phantomjs/bin/phantomjs",
@@ -131,7 +109,7 @@ var crawler = (function () {
 
     return {
 
-        run: crawlSite,
+        run: crawlSite2,
         callbacks: callbacks
 
     };

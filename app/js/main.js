@@ -41,29 +41,32 @@
 
         $scope.map = function () {
             $scope.disableUI = true;
+            $scope.mappingInProgress = true;
             $scope.log = [];
             mapper.map( $scope.params );
         };
 
         $scope.disableUI = true;
+        $scope.mappingInProgress = false;
         $scope.$on( "server-push", function ( event, msg ) {
 
             switch ( msg.event ) {
                 case 'web-socket-ready':
                     $scope.disableUI = false;
                     break;
-                case 'process-update':
+                case 'mapper-update':
                     $scope.log.push( msg.msg );
                     break;
-                case 'process-done':
+                case 'mapper-done':
                     $scope.disableUI = false;
+                    $scope.mappingInProgress = false;
                     break;
                 case 'sites-data-update':
                     $scope.sites = msg.data;
                     break;
 
             }
-            $scope.disableUI = false;
+
             $scope.$apply();
         } );
 
